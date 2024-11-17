@@ -1,6 +1,7 @@
 
 import { useEffect,useLayoutEffect,useState } from "react";
 import { supabase } from "../common/supabase";
+import EventCard from "../components/EventCard";
 
 export default function EventsBox() {
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -32,11 +33,20 @@ export default function EventsBox() {
                 <p className="text-[5em] font-extrabold">Events</p>
                 <div className="flex flex-col items-center justify-center">
                     <YearSelector selectedYear={selectedYear} setSelectedYear={setSelectedYear}/>
+                    <div className="flex justify-center overflow-x-scroll gap-4 w-[60%] h-[60vh] mt-[5%]    ">
+                        {events.map((event) => (
+                            <EventCard key={event.event_name} eventName={event.event_name} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
+
+
+
+
 
 function YearSelector({ selectedYear, setSelectedYear }) {
     const [availableYears, setAvailableYears] = useState([]);
@@ -66,13 +76,13 @@ function YearSelector({ selectedYear, setSelectedYear }) {
                 <button
                     key={year}
                     className={`
-                        league-spartan font-bold 
+                        league-spartan font-bold text-left pl-2
                         text-lg sm:text-2xl md:text-3xl lg:text-4xl
-                        w-full h-14 border-2 border-[#C23E30] 
+                        h-14 border-2 border-[#C23E30] 
                         transition-all duration-300 ease-in-out
                         ${
                         selectedYear === year
-                            ? "text-white bg-[#C23E30]"
+                            ? "text-white bg-[#C23E30] w-full"
                             : "text-[#C23E30] bg-transparent w-[80%]"
                     } hover:text-white hover:bg-[#C23E30]`}
                     onClick={() => setSelectedYear(year)}

@@ -21,3 +21,10 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
+
+canvas {
+  background: transparent; /* Allow the dark theme to show through */
+}
