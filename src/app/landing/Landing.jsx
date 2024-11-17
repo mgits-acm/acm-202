@@ -1,3 +1,7 @@
+"use client";
+
+import EventsBox from "./EventsBox";
+
 export default function Landing() {
     return (
         <div className="text-white min-h-screen min-w-screen flex flex-col">
@@ -40,7 +44,10 @@ export default function Landing() {
                     <p className="text-lg sm:text-2xl md:text-3xl lg:text-4xl">ACM MITS is a student chapter of the Association for Computing Machinery, MITS.</p>
                 </div>
             </div>
-            
+            <div className="w-[70vw] h-1 border-b-2 border-gray-500  self-center m-10"   />
+
+            {/* Events Section */}
+            <EventsBox />
 
 
                         
