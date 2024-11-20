@@ -33,7 +33,7 @@ export default function EventsBox() {
                 <p className="text-[5em] font-extrabold">Events</p>
                 <div className="flex flex-col items-center justify-center">
                     <YearSelector selectedYear={selectedYear} setSelectedYear={setSelectedYear}/>
-                    <div className="flex justify-center overflow-x-scroll gap-4 w-[60%] h-[60vh] mt-[5%]    ">
+                    <div className="flex justify-center overflow-x-scroll gap-[2%] w-[60%] h-[60vh] mt-[2%]    ">
                         {events.map((event) => (
                             <EventCard key={event.event_name} eventName={event.event_name} />
                         ))}
