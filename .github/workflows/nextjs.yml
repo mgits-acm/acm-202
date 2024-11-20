@@ -25,13 +25,13 @@ jobs:
 
       # Step 3: Debug environment variables
       - name: Debug Environment Variables
-        run: |
-          echo "Supabase URL: $NEXT_PUBLIC_SUPABASE_URL"
-          echo "Supabase Key: $NEXT_PUBLIC_SUPABASE_KEY"
+
         env:
           NEXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-
+        run: |
+          echo "Supabase URL: $NEXT_PUBLIC_SUPABASE_URL"
+          echo "Supabase Key: $NEXT_PUBLIC_SUPABASE_KEY"
       # Step 4: Install dependencies
       - name: Install Dependencies
         run: npm ci
