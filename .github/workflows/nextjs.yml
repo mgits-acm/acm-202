@@ -26,6 +26,9 @@ jobs:
       # Step 3: Install dependencies and build the site (if required)
       - name: Install Dependencies
         run: npm ci # Change this if you're using another package manager (e.g., yarn)
+        env:
+          NEXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
 
       - name: Build the Site
         run: npm run build # Change to your build command, e.g., `vite build`
