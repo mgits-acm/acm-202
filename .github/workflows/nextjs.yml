@@ -17,25 +17,38 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js (optional, only needed for builds using Node.js)
+      # Step 2: Set up Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '21' # Change this to your required Node.js version
+          node-version: '21' # Ensure this matches your project's Node.js version
 
-      # Step 3: Install dependencies and build the site (if required)
-      - name: Install Dependencies
-        run: npm ci # Change this if you're using another package manager (e.g., yarn)
+      # Step 3: Debug environment variables
+      - name: Debug Environment Variables
+        run: |
+          echo "Supabase URL: $NEXT_PUBLIC_SUPABASE_URL"
+          echo "Supabase Key: $NEXT_PUBLIC_SUPABASE_KEY"
         env:
           NEXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
 
-      - name: Build the Site
-        run: npm run build # Change to your build command, e.g., `vite build`
+      # Step 4: Install dependencies
+      - name: Install Dependencies
+        run: npm ci
+        env:
+          NEXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
 
-      # Step 4: Deploy to GitHub Pages
+      # Step 5: Build the site
+      - name: Build the Site
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+
+      # Step 6: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build # Change this to your output directory
+          publish_dir: ./build # Your output directory
