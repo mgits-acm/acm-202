@@ -3,9 +3,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import Trianglify from "trianglify";
 
-const EventCard = ({ eventName }) => {
+const EventCard = ({ eventName,selectedYear }) => {
   const svgRef = useRef(null);
   const cardRef = useRef(null);
+  const [currentYear, setCurrentYear] = useState(selectedYear);
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
   const [isVisible, setIsVisible] = useState(false);
 
@@ -24,11 +25,20 @@ const EventCard = ({ eventName }) => {
   }
 
   useEffect(() => {
+    if (selectedYear !== currentYear) {
+      setIsVisible(false);
+      setCurrentYear(selectedYear);
+    }
+  }, [selectedYear]);
+
+  useEffect(() => {
     if (cardRef.current) {
       const { clientWidth, clientHeight } = cardRef.current;
       setDimension({ width: clientWidth, height: clientHeight });
     }
   }, []);
+
+
 
   useEffect(() => {
     if (dimension.width && dimension.height && svgRef.current) {
@@ -36,18 +46,26 @@ const EventCard = ({ eventName }) => {
       svgRef.current.appendChild(generatePattern().toSVG());
       setIsVisible(true); // Trigger the visibility animation
     }
-  }, [dimension]);
+  }, [dimension,window.innerWidth]);
 
   return (
     <div
-      className={`relative min-w-[18%] h-full overflow-hidden transform transition-opacity duration-500 ease-in-out ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
+      className={`relative 
+        min-w-[40%] sm:min-w-[10%] md:min-w-[24%] lg:min-w-[18%] px-2
+        h-[40vh] sm:h-[250px] lg:h-full 
+        overflow-hidden transform 
+        transition-opacity duration-200 ease-in-out ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
       ref={cardRef}
     >
       <div ref={svgRef} className="absolute inset-0 w-full h-full"></div>
       <div className="absolute inset-0 flex items-center justify-center border-2 border-red">
-        <div className="text-white text-4xl font-bold -rotate-90">
+        <div
+          className={`text-white font-bold 
+            text-xl sm:text-2xl lg:text-4xl 
+            transform -rotate-90`}
+        >
           {String(eventName).toUpperCase()}
         </div>
       </div>
